@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Billing Info Verification</title>
+</head>
+<body style="font-family: Arial, sans-serif; background: #f9f9f9; padding: 30px;">
+    <div style="max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; border: 1px solid #eee;">
+        <h2 style="color: #333;">Hi {{ user.first_name|default:user.username }},</h2>
+        <p>Your billing info verification code is:</p>
+        <h1 style="color: #4CAF50; font-size: 36px;">{{ code }}</h1>
+        <p>Please enter this code in the verification form to confirm your billing information.</p>
+        <p style="margin-top: 40px;">Thanks,<br><strong>Your CPA Team</strong></p>
+    </div>
+</body>
+</html>

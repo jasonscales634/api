@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Verification</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f5f5;
+            text-align: center;
+            padding: 50px;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: orange; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2 class="{{ message_type }}">{{ message }}</h2>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Verify Your Email</title>
+</head>
+<body style="font-family: sans-serif; background: #f7f7f7; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px #ccc;">
+        <h2>Welcome to ADCPA, {{ user.first_name }}!</h2>
+        <p>Thank you for signing up. To verify your email and activate your account, please click the button below:</p>
+        <p style="text-align: center; margin: 30px 0;">
+            <a href="{{ verify_url }}" style="padding: 12px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                Verify My Email
+            </a>
+        </p>
+        <p>If you didn’t request this, you can ignore this email.</p>
+        <p>Thanks,<br>ADCPA Team</p>
+    </div>
+</body>
+</html>

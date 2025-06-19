@@ -1,0 +1,25 @@
+# Python cache
+_pycache_/
+*.pyc
+
+# Env file
+.env
+
+# SQLite DB (যদি local DB থাকে)
+*.db
+
+# IDE/project settings (VSCode/PyCharm)
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+
+# Byte-compiled / optimized / DLL files
+*.pyd
+*.pyo
+*.so
+
+# MacOS
+.DS_Store

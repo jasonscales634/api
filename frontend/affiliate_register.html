@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Affiliate Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 30px;
+    }
+    form {
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .message {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <form id="registerForm">
+    <h2>Affiliate Sign Up</h2>
+
+    <input type="text" name="first_name" placeholder="First Name" required />
+    <input type="text" name="last_name" placeholder="Last Name" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+
+    <input type="text" name="company_name" placeholder="Company Name" />
+    <input type="url" name="website" placeholder="Website URL" required />
+    <textarea name="address" placeholder="Address" required></textarea>
+    <input type="text" name="city" placeholder="City" required />
+    <input type="text" name="country" placeholder="Country" required />
+    <input type="text" name="telegram" placeholder="Telegram Username" required />
+    <input type="text" name="main_verticals" placeholder="Main Verticals" />
+    <input type="text" name="monthly_revenue" placeholder="Monthly Revenue" />
+    <input type="text" name="traffic_sources" placeholder="Traffic Sources" />
+
+    <button type="submit">Register</button>
+    <div class="message" id="message"></div>
+  </form>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => data[key] = value);
+
+      try {
+        const response = await fetch("http://localhost:8000/api/affiliate/register/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        const msgBox = document.getElementById("message");
+        if (response.ok) {
+          msgBox.innerText = "✅ Registration successful!";
+          msgBox.style.color = "green";
+          form.reset();
+        } else {
+          msgBox.innerText = "❌ " + (result?.email?.[0] || result?.confirm_password?.[0] || "Registration failed.");
+          msgBox.style.color = "red";
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("message").innerText = "❌ Network error.";
+      }
+    });
+  </script>
+</body>
+</html>

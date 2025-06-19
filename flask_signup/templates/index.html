@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Signup</title>
+</head>
+<body>
+<h2>Signup with Email</h2>
+<form method="post" action="/signup" id="signupForm">
+  <input type="email" name="email" placeholder="Enter your email" required>
+  <button type="submit">Signup</button>
+</form>
+<p id="msg"></p>
+<script>
+  const form = document.getElementById('signupForm');
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const email = new FormData(form).get('email');
+    try {
+      const res = await fetch('/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      document.getElementById('msg').textContent = data.message || data.error;
+    } catch {
+      document.getElementById('msg').textContent = 'Network error.';
+    }
+  };
+</script>
+</body>
+</html>

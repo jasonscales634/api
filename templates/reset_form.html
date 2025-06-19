@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password - ADCpa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #ffffff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            margin-bottom: 1.2rem;
+            color: #0077b6;
+            text-align: center;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: #0077b6;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #005f87;
+        }
+        .footer {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            text-align: center;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Reset Your Password</h2>
+        <form method="post" action="/api/reset-password/">
+            <input type="hidden" name="token" value="{{ token }}" />
+            <label for="password">New Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter new password" required />
+
+            <button type="submit">Reset Password</button>
+        </form>
+        <div class="footer">
+            &copy; {{ year|default:"2025" }} ADCpa. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

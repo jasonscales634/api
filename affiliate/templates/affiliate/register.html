@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create ADCPA Account</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px;
+    }
+    form {
+      background-color: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    h2 { text-align: center; margin-bottom: 25px; }
+    label { font-weight: 500; display: block; margin-bottom: 10px; }
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    input:focus, select:focus { border-color: #007bff; outline: none; }
+    button {
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #0056b3; }
+    #msg { margin-top: 20px; text-align: center; color: red; }
+    .input-wrap { position: relative; margin-bottom: 15px; }
+    .toggle-eye {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+    }
+    .criteria {
+      font-size: 0.85em;
+      margin-left: 5px;
+      color: red;
+      list-style: none;
+    }
+    .criteria::before {
+      content: "❌ ";
+    }
+    .criteria.valid {
+      color: green;
+    }
+    .criteria.valid::before {
+      content: "✅ ";
+    }
+
+    @media screen and (max-width: 600px) {
+      body { padding: 10px; }
+      form { margin: 10px auto; padding: 15px; }
+      h2 { font-size: 1.3rem; margin-bottom: 20px; }
+    }
+  </style>
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+
+<form method="POST" action="{% url 'affiliate-register-form' %}">
+  {% csrf_token %}
+  <h2>Create Your ADCPA Account</h2>
+
+  {% if message %}
+    <p id="msg" style="color: {{ message_type|default:'red' }}">{{ message }}</p>
+  {% endif %}
+
+  <label>Email *<input type="email" name="email" required></label>
+
+  <label>Password *</label>
+  <div class="input-wrap">
+    <input type="password" id="password" name="password" required>
+    <span class="toggle-eye" onclick="toggleVisibility('password')">👁</span>
+  </div>
+
+  <label>Repeat Password *</label>
+  <div class="input-wrap">
+    <input type="password" id="repeat_password" name="repeat_password" required>
+    <span class="toggle-eye" onclick="toggleVisibility('repeat_password')">👁</span>
+  </div>
+
+  <ul id="password-criteria">
+    <li id="length" class="criteria">8 or up to 16 characters</li>
+    <li id="case" class="criteria">one uppercase and lowercase</li>
+    <li id="digit" class="criteria">one numeric digit</li>
+    <li id="special" class="criteria">special character: _-!@#$%^&*()+=[]</li>
+    <li id="match" class="criteria">passwords must match</li>
+  </ul>
+
+  <label>First Name *<input type="text" name="first_name" required></label>
+  <label>Last Name *<input type="text" name="last_name" required></label>
+  <label>Company Name<input type="text" name="company_name"></label>
+  <label>Website *<input type="text" name="website" required></label>
+  <label>Address and Zipcode *<input type="text" name="address_zipcode" required></label>
+  <label>City *<input type="text" name="city" required></label>
+
+  <label>🌍 Country *</label>
+  <select id="country" name="country" required style="width: 100%;">
+    <option></option>
+    <option value="AF" data-flag="🇦🇫">Afghanistan</option>
+    <option value="AL" data-flag="🇦🇱">Albania</option>
+    <option value="DZ" data-flag="🇩🇿">Algeria</option>
+    <option value="US" data-flag="🇺🇸">United States</option>
+    <option value="GB" data-flag="🇬🇧">United Kingdom</option>
+    <option value="BD" data-flag="🇧🇩">Bangladesh</option>
+    <option value="IN" data-flag="🇮🇳">India</option>
+    <option value="PK" data-flag="🇵🇰">Pakistan</option>
+    <option value="ZA" data-flag="🇿🇦">South Africa</option>
+    <option value="DE" data-flag="🇩🇪">Germany</option>
+    <option value="FR" data-flag="🇫🇷">France</option>
+  </select>
+
+  <label>Telegram or Messenger *<input type="text" name="messenger" required></label>
+  <label>Main Verticals *
+    <select name="vertical" required>
+      <option value="">Select one</option>
+      <option value="Dating">Dating</option>
+      <option value="Nutra">Nutra</option>
+      <option value="App Installs">App Installs</option>
+      <option value="Gaming">Gaming</option>
+      <option value="Crypto">Crypto</option>
+      <option value="E-commerce">E-commerce</option>
+    </select>
+  </label>
+
+  <label>Monthly Revenue *<input type="text" name="monthly_revenue" required></label>
+  <label>Traffic Sources *<input type="text" name="traffic_sources" required></label>
+
+  <div class="g-recaptcha" data-sitekey="{{ site_key }}"></div>
+  <button type="submit">Signup</button>
+</form>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  // Country select with flags
+  function formatCountry(option) {
+    if (!option.id) return option.text;
+    const flag = $(option.element).data('flag') || '';
+    const $option = document.createElement('span');
+    $option.innerText = ${flag} ${option.text};
+    return $option;
+  }
+
+  $(document).ready(function () {
+    $('#country').select2({
+      placeholder: "🌍 Select your country",
+      templateResult: formatCountry,
+      templateSelection: formatCountry,
+      allowClear: true
+    });
+  });
+</script>
+ <!-- Password Validation Script -->
+<script>
+  const password = document.getElementById("password");
+  const repeat = document.getElementById("repeat_password");
+
+  const length = document.getElementById("length");
+  const caseChar = document.getElementById("case");
+  const digit = document.getElementById("digit");
+  const special = document.getElementById("special");
+  const match = document.getElementById("match");
+
+  const specialChars = /[!@#$%^&*()_\-+=👦👦{};':"\\|,.<>\/?~`]/;
+
+  function validate() {
+    const val = password.value;
+    const valRepeat = repeat.value;
+
+    length.classList[val.length >= 8 && val.length <= 16 ? 'add' : 'remove']("valid");
+    caseChar.classList[(/[a-z]/.test(val) && /[A-Z]/.test(val)) ? 'add' : 'remove']("valid");
+    digit.classList[/\d/.test(val) ? 'add' : 'remove']("valid");
+    special.classList[specialChars.test(val) ? 'add' : 'remove']("valid");
+    match.classList[val && val === valRepeat ? 'add' : 'remove']("valid");
+  }
+
+  password.addEventListener("input", validate);
+  repeat.addEventListener("input", validate);
+
+  function toggleVisibility(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
+  }
+</script>
+
+
+</body>
+</html>

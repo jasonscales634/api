@@ -1,0 +1,18 @@
+<!-- templates/email/payment_status.html -->
+<!DOCTYPE html>
+<html>
+  <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background-color: #fff; padding: 30px; border: 1px solid #eee;">
+      <h2 style="color: #333;">Hello {{ user.email }},</h2>
+      <p>Your payment request has been <strong style="color: #28a745;">{{ status|title }}</strong>.</p>
+      <hr>
+      <p><strong>Amount:</strong> ${{ amount }}</p>
+      <p><strong>Method:</strong> {{ method }}</p>
+      <p><strong>Status:</strong> {{ status }}</p>
+      <p><strong>Date:</strong> {{ date }}</p>
+      <hr>
+      <p style="color: #555;">If you have questions, please contact our support team.</p>
+      <p>Regards,<br><strong>ADCpa Team</strong></p>
+    </div>
+  </body>
+</html>
