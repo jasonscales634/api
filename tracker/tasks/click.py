@@ -107,3 +107,4 @@ def click(data):
         logger.exception(f"❌ Failed to create Click: {e}")
         return f"Failed to create Click: {e}"
 
+
